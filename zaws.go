@@ -9,8 +9,6 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/cloudwatch"
-	"github.com/aws/aws-sdk-go/service/ec2"
-	"github.com/aws/aws-sdk-go/service/elb"
 	"net"
 	"os"
 	"strconv"
@@ -75,6 +73,8 @@ type Data struct {
 	InstancePrivateAddr string `json:"{#INSTANCE.PRIVATE.ADDR},omitempty"`
 	ElbName             string `json:"{#ELB.NAME},omitempty"`
 	ElbDnsName          string `json:"{#ELB.DNS.NAME},omitempty"`
+	RdsName             string `json:"{#RDS.NAME},omitempty"`
+	RdsDnsName          string `json:"{#RDS.DNS.NAME},omitempty"`
 }
 
 // Common util
@@ -215,6 +215,15 @@ func main() {
 		default:
 			usage()
 		}
+	case "rds":
+		switch os.Args[2] {
+		case "list":
+			os.Args = os.Args[2:]
+			zaws := NewZaws()
+			zaws.ShowRdsList()
+		default:
+			usage()
+		}
 	case "cloudwatch":
 		switch os.Args[2] {
 		case "list":
@@ -226,11 +235,17 @@ func main() {
 				os.Args = os.Args[3:]
 				zaws := NewZaws()
 				zaws.ShowEC2CloudwatchMetricsList()
-			case "rds":
+
 			case "elb":
 				os.Args = os.Args[3:]
 				zaws := NewZaws()
 				zaws.ShowELBCloudwatchMetricsList()
+
+			case "rds":
+				os.Args = os.Args[3:]
+				zaws := NewZaws()
+				zaws.ShowRdsCloudwatchMetricsList()
+
 			default:
 				usage()
 			}
@@ -247,6 +262,10 @@ func main() {
 				os.Args = os.Args[3:]
 				zaws := NewZaws()
 				zaws.SendElbMetricStats()
+			case "rds":
+				os.Args = os.Args[3:]
+				zaws := NewZaws()
+				zaws.SendRdsMetricStats()
 			default:
 				usage()
 			}
