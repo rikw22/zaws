@@ -11,6 +11,9 @@ This template is supported over Zabbix 3.0.
 * ELB monitoring
     * Automatically registration ELB instances information by using Zabbix LLD host prototype.
     * Automatically registration ELB CloudWatch metrics information by using Zabbix LLD item prototype.
+* RDS monitoring
+  * Automatically registration RDS instances information by using Zabbix LLD host prototype.
+  * Automatically registration RDS CloudWatch metrics information by using Zabbix LLD item prototype.
 
 # Requirements
 
@@ -24,9 +27,9 @@ Download zaws command line tool and Zabbix template xml file.
 
 Please get the binary file that is appropriate for your environment architecture.
 
-[binary file url](https://github.com/ike-dai/zaws/releases)
+[binary file url](https://github.com/rikw22/zaws/releases)
 
-[template xml file url](https://github.com/ike-dai/zaws/tree/master/templates/zaws_zabbix_template.xml)
+[template xml file url](https://github.com/rikw22/zaws/tree/master/templates/zaws_zabbix_template.xml)
 
 ## 2. Copy to Externalscripts directory
 
@@ -55,6 +58,13 @@ Please import "zaws_zabbix_template.xml"
     * {$KEY}: Please set AWS ACCESS KEY ID (e.g. AKI........)
     * {$SECRET}: Please set AWS SECRET ACCESS KEY
 
+
+## Build It Yorself
+* Install GoReleaser https://goreleaser.com/install/
+* Build
+```sh
+goreleaser release --snapshot --rm-dist
+```
 # Contact
 
 Please send feedback to me.
